@@ -32,7 +32,6 @@ export class WeatherDataManager {
     static getAverageData() {
         const data = this.read()
         const average = propName => data.reduce( (acc, forecast) => acc + forecast[1][propName], 0)/data.length
-        console.log('averageTemperature', average('temperature'))
         return {
             averageTemperature: average('temperature'),
             averageApparentTemperature: average('apparentTemperature'),

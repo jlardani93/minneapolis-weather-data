@@ -3,6 +3,7 @@ import bodyParser from 'body-parser'
 import logger from 'morgan'
 import { DarkSkyApi } from './models/DarkSkyApi';
 import { WeatherDataManager } from './models/WeatherDataManager';
+
 require('dotenv').config({ path: '../.env' })
 
 const app = express()
@@ -55,8 +56,7 @@ app.get('/api/averageForecastData', (req, res) => res.send({
 
 
 // Receive updated forecast every minute
-DarkSkyApi.getForecast().then( forecast => WeatherDataManager.write(forecast))
-console.log('Weather Data', WeatherDataManager.read())
-// setInterval(() => { DarkSkyApi.getForecast().then( forecast => WeatherDataManager.write(forecast))}, 60*1000)
+
+setInterval(() => { DarkSkyApi.getForecast().then(forecast => WeatherDataManager.write(forecast)) }, 60*1000)
 
 app.listen(API_PORT, () => console.log(`I'm Listening on port ${API_PORT}`))

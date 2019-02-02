@@ -1,2 +1,4 @@
 node_modules/
 weather-data.json
+.env
+.vscode

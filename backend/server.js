@@ -13,7 +13,6 @@ app.use(logger('dev'))
 app.use('/api', router);
 
 // Receive updated forecast every minute
-
 setInterval(() => { DarkSkyApi.getForecast().then(forecast => WeatherDataManager.write(forecast)) }, 60*1000)
 
 app.listen(API_PORT, () => console.log(`I'm Listening on port ${API_PORT}`))

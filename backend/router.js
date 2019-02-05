@@ -1,5 +1,6 @@
 import express from 'express'
 import { WeatherDataManager } from './models/WeatherDataManager'
+import { Cache } from './models/Cache'
 
 export const router = express.Router()
 
@@ -24,19 +25,13 @@ router.get('/', (req, res) => res.send({
     }
 }))
 
-router.get('/forecastData', (req, res) => res.send({
-    format: 'date', 
-    data: WeatherDataManager.read()
-}))
+registerDataEndPoint('/forecastData', WeatherDataManager.read())
+registerDataEndPoint('/averageForecastData', Cache.getAverageData())
+registerDataEndPoint('/currentForecastData', Cache.getCurrentForecast())
 
-// TODO: create cache for this. Update it whenever data is added to weather-data.json
-router.get('/averageForecastData', (req, res) => res.send({
-    format: 'date',
-    data: WeatherDataManager.getAverageData()
-}))
-
-// TODO: create cache for current forecast and return that instead
-// app.get('/api/currentForecastData', (req, res) => res.send({
-//     format: 'date',
-//     data: WeatherDataManager.read().pop()[1]
-// }))
+function registerDataEndPoint(endpoint, data) {
+    router.get(endpoint, (req, res) => res.send({
+        format: 'date',
+        data
+    }))
+}

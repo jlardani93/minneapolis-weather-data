@@ -54,7 +54,7 @@ class App extends Component {
               </tr>
             </thead>
             <tbody>
-              {this.state.forecastData && this.state.forecastData.map( ([date, forecast]) => (
+              {forecastData.map( ([date, forecast]) => (
                 <tr key={date}>
                   <td>{new Date(forecast.time*1000).toTimeString()}</td>
                   <td>{forecast.temperature} F</td>
